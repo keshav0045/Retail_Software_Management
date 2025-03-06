@@ -1,0 +1,89 @@
+<nav class="sidebar">
+  <div class="logo">
+      <h1>BizMan</h1>
+  </div>
+  <ul>
+    <li class="nav-item">
+        <a class="nav-link" [routerLink]="'/header'">Header</a>
+      </li><li class="nav-item">
+        <a class="nav-link" [routerLink]="'/orders'">Orders</a>
+      </li><li class="nav-item">
+        <a class="nav-link" [routerLink]="'/inventory'">Inventory</a>
+      </li>
+  </ul>
+</nav>
+
+<main class="content">
+  <header>
+      <h2>Dashboard Overview</h2>
+      <div class="user-info">
+          <span>John Doe</span>
+          <i class="fas fa-user-circle"></i>
+      </div>
+  </header>
+
+  <div class="metrics-grid">
+      <div class="metric-card">
+          <h3>Total Sales</h3>
+          <p class="metric-value">$24,500</p>
+          <p class="metric-change positive">+15% vs last month</p>
+      </div>
+      <div class="metric-card">
+          <h3>Active Orders</h3>
+          <p class="metric-value">47</p>
+          <p class="metric-change">Current pending</p>
+      </div>
+      <div class="metric-card">
+          <h3>Low Stock Items</h3>
+          <p class="metric-value">12</p>
+          <p class="metric-change negative">Needs attention</p>
+      </div>
+      <div class="metric-card">
+          <h3>Customer Satisfaction</h3>
+          <p class="metric-value">4.8/5.0</p>
+          <p class="metric-change positive">+0.2 vs last month</p>
+      </div>
+  </div>
+
+  <div class="dashboard-grid">
+      <div class="chart-container">
+          <h3>Recent Sales</h3>
+          <img src="https://images.unsplash.com/photo-1497215842964-222b430dc094" alt="Sales Chart" class="chart-image">
+      </div>
+      <div class="recent-orders">
+          <h3>Latest Orders</h3>
+          <table>
+              <thead>
+                  <tr>
+                      <th>Order ID</th>
+                      <th>Customer</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>#12345</td>
+                      <td>Sarah Johnson</td>
+                      <td>$230.00</td>
+                      <td><span class="status-pill pending">Pending</span></td>
+                  </tr>
+                  <tr>
+                      <td>#12344</td>
+                      <td>Mike Smith</td>
+                      <td>$180.50</td>
+                      <td><span class="status-pill completed">Completed</span></td>
+                  </tr>
+                  <tr>
+                      <td>#12343</td>
+                      <td>Emma Davis</td>
+                      <td>$450.00</td>
+                      <td><span class="status-pill processing">Processing</span></td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</main>
+
+<router-outlet></router-outlet>
