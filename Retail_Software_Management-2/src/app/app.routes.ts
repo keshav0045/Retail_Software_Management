@@ -11,7 +11,7 @@ export const routes: Routes = [
 
   {
     path: '',
-    redirectTo: 'header',
+    redirectTo: 'main_page',
     pathMatch: 'full'
   },
   {
