@@ -1,17 +1,36 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../../service/auth.service';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
   standalone: true,
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
 
   showRegisterForm = signal<boolean>(false);
+  http = inject(HttpClient)
+  router = inject(Router)
+
+  //usnig templet form
+  customerObj: any ={
+    "userId": 0,
+    "userName": "",
+    "emailId": "",
+    "fullName": "",
+    "password": ""
+  };
+ 
+  //using reactive form
+  loginForm: FormGroup = new FormGroup({
+    userName: new FormControl(""),
+    password: new FormControl("")
+  })
  
 
 
@@ -20,34 +39,34 @@ export class LoginComponent {
     this.showRegisterForm.set(!this.showRegisterForm())
   }
 
-  credentials = { email: '', password: '' };
 
-  // Hardcoded user credentials
-  validUser = { email: 'admin@mail.com', password: 'admin123' };
-
-  constructor(private router: Router) {}
-
-  login() {
-    if (
-      this.credentials.email === this.validUser.email &&
-      this.credentials.password === this.validUser.password
-    ) {
-      localStorage.setItem('user', JSON.stringify(this.validUser));
-      alert('Login successful!');
-      this.router.navigate(['/dashboard']); // Redirect after login
-    } else {
-      alert('Invalid Credentials');
-    }
+  onRegister(){
+    debugger;
+    this.http.post("https://projectapi.gerasim.in/api/BankLoan/RegisterCustomer",this.customerObj).subscribe((res:any)=>{
+      if(res.result){
+        alert('Customer registered successfully')
+      }else{
+        alert(res.message)
+      }
+    },error=>{
+      alert('Network Error')
+    })
   }
 
-  isAuthenticated(): boolean {
-    return localStorage.getItem('user') !== null;
+  onLogin(){
+    debugger;
+    const formValue = this.loginForm.value
+    this.http.post("https://projectapi.gerasim.in/api/BankLoan/login",formValue).subscribe((res:any)=>{
+      debugger;
+      if(res.result){
+        sessionStorage.setItem("bankuser",JSON.stringify(res.data))
+        this.router.navigateByUrl('/header')  // on successfull login customer will redirect to application-list page
+      }else{
+        alert(res.message)
+      }
+    },error=>{
+      alert('Network Error')
+    })
   }
-
-  logout() {
-    localStorage.removeItem('user');
-    this.router.navigate(['/login']);
-  }
-
 
 }
